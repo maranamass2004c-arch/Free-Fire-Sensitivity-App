@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Fire Sensitivity</title>
+<style>
+body {
+    margin:0;
+    padding:20px;
+    background:#101827;
+    color:white;
+    font-family:Arial,sans-serif;
+}
+h1 {color:#00e5ff;text-align:center}
+h3 {color:#00e5ff}
+.card {
+    background:#1e293b;
+    padding:18px;
+    border-radius:15px;
+    margin:15px 0;
+}
+input[type=text] {
+    width:95%;
+    padding:12px;
+    border:0;
+    border-radius:8px;
+}
+input[type=range] {width:100%}
+.value {color:#00e5ff;font-weight:bold}
+button {
+    background:#00c853;
+    color:white;
+    border:0;
+    padding:13px;
+    border-radius:9px;
+    font-size:16px;
+    margin:5px;
+}
+.preset {background:#2563eb}
+</style>
+</head>
+<body>
+
+<h1>🔥 FREE FIRE INDIA</h1>
+<h3 style="text-align:center">Sensitivity Settings</h3>
+
+<div class="card">
+<label>உன் Phone Model</label>
+<input type="text" id="phone" placeholder="உதா: Redmi, Samsung, Vivo">
+</div>
+
+<div class="card">
+<h3>🎯 Sensitivity Presets</h3>
+<button class="preset" onclick="preset('head')">Headshot</button>
+<button class="preset" onclick="preset('close')">Close Range</button>
+<button class="preset" onclick="preset('balanced')">Balanced</button>
+</div>
+
+<div class="card" id="settings">
+</div>
+
+<div class="card">
+<h3>🔥 Fire Button Size</h3>
+<input type="range" id="fire" min="30" max="100" value="55"
+oninput="showFire()">
+<p>Size: <span class="value" id="fireValue">55</span></p>
+</div>
+
+<div class="card">
+<button onclick="copySettings()">📋 Copy Settings</button>
+<p id="message"></p>
+</div>
+
+<script>
+const names = [
+"General","Red Dot","2X Scope","4X Scope",
+"Sniper Scope","Free Look"
+];
+
+const defaults = [180,170,155,145,95,130];
+
+function makeSliders(values) {
+    let html = "";
+    names.forEach((name,i) => {
+        html += `
+        <p><b>${name}</b> :
+        <span class="value" id="v${i}">${values[i]}</span></p>
+        <input type="range" min="0" max="200"
+        value="${values[i]}" id="s${i}"
+        oninput="document.getElementById('v${i}').innerText=this.value">
+        `;
+    });
+    document.getElementById("settings").innerHTML =
+        "<h3>🎮 Sensitivity</h3>" + html;
+}
+
+function preset(type) {
+    let values;
+    if(type === "head") values = [190,185,170,155,100,130];
+    else if(type === "close") values = [195,190,180,160,90,120];
+    else values = [180,170,155,145,95,130];
+    makeSliders(values);
+}
+
+function showFire() {
+    document.getElementById("fireValue").innerText =
+        document.getElementById("fire").value;
+}
+
+function copySettings() {
+    let phone = document.getElementById("phone").value || "Not entered";
+    let text = "FREE FIRE INDIA SETTINGS\nPhone: " + phone + "\n";
+    names.forEach((name,i) => {
+        text += name + ": " +
+        document.getElementById("s"+i).value + "\n";
+    });
+    text += "Fire Button Size: " +
+        document.getElementById("fire").value;
+
+    navigator.clipboard.writeText(text)
+    .then(() => document.getElementById("message").innerText =
+        "Settings Copied!");
+}
+
+makeSliders(defaults);
+</script>
+
+</body>
+</html>
