@@ -1,0 +1,6 @@
+{
+  "name": "FF Sensi Lab",
+  "description": "Device-aware Free Fire India headshot sensitivity calibrator factoring mobile model, touch response, refresh rate, and game settings.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
